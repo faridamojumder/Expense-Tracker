@@ -1,0 +1,78 @@
+﻿@model IEnumerable<ExpenseTracker.Models.Expense>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Report</h1>
+
+<form asp-action="Report" asp-controller="Expenses" method="post">
+    <div class="row">
+        <div class="col-md-2">
+            <span>From Date</span>
+        </div>
+        <div class="col-md-4">
+            <input name="fromDate" type="date" class="form-control" />
+        </div>
+        <div class="col-md-2">
+            <span>To Date</span>
+        </div>
+        <div class="col-md-4">
+            <input name="toDate" type="date" class="form-control" />
+        </div>
+    </div>
+    <div class="row" style="padding-top:10px">
+        <div class="col-md-12" style="align-content:center">
+            <input name="submit" type="submit" value="Filter" class="form-control" />
+        </div>
+    </div>
+</form>
+
+
+@if (Model != null)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.ExpensesName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DateOfExpense)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ExpenseAmount)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ExpenseCategory.CategoryName)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ExpensesName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DateOfExpense)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ExpenseAmount)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ExpenseCategory.CategoryName)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.ExpensesId">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.ExpensesId">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.ExpensesId">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
